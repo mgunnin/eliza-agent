@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-primus",
-    "version": "0.1.8+build.1",
+    "version": "0.1.8-alpha.1",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -20,8 +20,8 @@
     ],
     "dependencies": {
         "@elizaos/core": "workspace:*",
-        "agent-twitter-client": "0.0.18",
         "@primuslabs/zktls-core-sdk": "^0.1.0",
+        "agent-twitter-client": "0.0.18",
         "tsup": "8.3.5"
     },
     "scripts": {

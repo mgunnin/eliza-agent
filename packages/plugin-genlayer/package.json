@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-genlayer",
-    "version": "0.1.8+build.1",
+    "version": "0.1.8-alpha.1",
     "main": "dist/index.js",
     "type": "module",
     "types": "dist/index.d.ts",
@@ -11,8 +11,8 @@
         "test": "vitest run"
     },
     "dependencies": {
-        "genlayer-js": "0.4.7",
         "@elizaos/core": "workspace:*",
+        "genlayer-js": "0.4.7",
         "tsup": "8.3.5"
     }
 }

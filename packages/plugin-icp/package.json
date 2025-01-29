@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-icp",
-    "version": "0.1.8+build.1",
+    "version": "0.1.8-alpha.1",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -19,11 +19,11 @@
         "dist"
     ],
     "dependencies": {
-        "@elizaos/core": "workspace:*",
         "@dfinity/agent": "2.1.3",
         "@dfinity/candid": "2.1.3",
         "@dfinity/identity": "2.1.3",
-        "@dfinity/principal": "2.1.3"
+        "@dfinity/principal": "2.1.3",
+        "@elizaos/core": "workspace:*"
     },
     "scripts": {
         "build": "tsup --format esm --dts",

@@ -1,13 +1,13 @@
 {
     "name": "@elizaos/plugin-tee-log",
-    "version": "0.1.8+build.1",
+    "version": "0.1.8-alpha.1",
     "main": "dist/index.js",
     "type": "module",
     "types": "dist/index.d.ts",
     "dependencies": {
         "@elizaos/core": "workspace:*",
-        "@elizaos/plugin-tee": "workspace:*",
         "@elizaos/plugin-sgx": "workspace:*",
+        "@elizaos/plugin-tee": "workspace:*",
         "better-sqlite3": "11.6.0",
         "elliptic": "6.6.1"
     },

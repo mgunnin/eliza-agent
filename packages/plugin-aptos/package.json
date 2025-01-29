@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-aptos",
-    "version": "0.1.8+build.1",
+    "version": "0.1.8-alpha.1",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -19,8 +19,8 @@
         "dist"
     ],
     "dependencies": {
-        "@elizaos/core": "workspace:*",
         "@aptos-labs/ts-sdk": "^1.26.0",
+        "@elizaos/core": "workspace:*",
         "bignumber.js": "9.1.2",
         "node-cache": "5.1.2",
         "tsup": "8.3.5",

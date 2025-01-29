@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-ton",
-    "version": "0.1.8+build.1",
+    "version": "0.1.8-alpha.1",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -20,10 +20,10 @@
     ],
     "dependencies": {
         "@elizaos/core": "workspace:*",
+        "@ton/crypto": "3.3.0",
+        "@ton/ton": "15.1.0",
         "bignumber.js": "9.1.2",
         "node-cache": "5.1.2",
-        "@ton/ton": "15.1.0",
-        "@ton/crypto": "3.3.0",
         "tsup": "8.3.5"
     },
     "scripts": {
