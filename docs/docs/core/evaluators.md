@@ -24,7 +24,7 @@ Evaluators enable agents to:
 1. Import the necessary evaluator types:
 
 ```typescript
-import { Evaluator, IAgentRuntime, Memory, State } from "@elizaos/core-core";
+import { Evaluator, IAgentRuntime, Memory, State } from "@elizaos/core";
 ```
 
 2. Choose or create an evaluator:

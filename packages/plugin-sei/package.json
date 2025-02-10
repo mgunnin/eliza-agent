@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-sei",
-    "version": "0.1.9",
+    "version": "0.25.6-alpha.1",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -22,7 +22,7 @@
         "@elizaos/core": "workspace:*",
         "node-cache": "5.1.2",
         "tsup": "8.3.5",
-        "vitest": "2.1.4"
+        "vitest": "2.1.9"
     },
     "scripts": {
         "build": "tsup --format esm --dts",
@@ -32,5 +32,8 @@
     "peerDependencies": {
         "form-data": "4.0.1",
         "whatwg-url": "7.1.0"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

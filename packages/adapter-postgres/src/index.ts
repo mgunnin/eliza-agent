@@ -1016,12 +1016,12 @@ export class PostgresDatabaseAdapter
                         SELECT
                             embedding,
                             COALESCE(
-                                content->$2->>$3,
+                                content->>$2,
                                 ''
                             ) as content_text
                         FROM memories
-                        WHERE type = $4
-                        AND content->$2->>$3 IS NOT NULL
+                        WHERE type = $3
+                        AND content->>$2 IS NOT NULL
                     )
                     SELECT
                         embedding,
@@ -1033,14 +1033,13 @@ export class PostgresDatabaseAdapter
                     WHERE levenshtein(
                         $1,
                         content_text
-                    ) <= $6  -- Add threshold check
+                    ) <= $5  -- Add threshold check
                     ORDER BY levenshtein_score
-                    LIMIT $5
+                    LIMIT $4
                 `;
 
                 const { rows } = await this.pool.query(sql, [
                     opts.query_input,
-                    opts.query_field_name,
                     opts.query_field_sub_name,
                     opts.query_table_name,
                     opts.query_match_count,

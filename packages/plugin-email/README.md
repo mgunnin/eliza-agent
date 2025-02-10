@@ -1,6 +1,6 @@
 # Description
 
-Implementation of a EmailClient for Eliza.
+Implementation of an EmailClient for Eliza.
 
 # Settings
 
@@ -11,14 +11,14 @@ The following settings will be declared on your environment variable or inside y
 - `EMAIL_OUTGOING_SERVICE`: "smtp" | "gmail"
 - `EMAIL_OUTGOING_HOST`: SMTP Hostname or IP to connect to. Required only when "smtp" service is configured.
 - `EMAIL_OUTGOING_PORT`: the port to connect to (defaults to 465 for secure connections, otherwise 587). Required only if "smtp" is configured.
-- `EMAIL_SECURE`: if true the connection will use TLS, otherwise TLS will be used if server supports STARTLS extension. Set to true if port 465 is selected.
+- `EMAIL_SECURE`: if true the connection will use TLS, otherwise TLS will be used if server supports STARTTLS extension. Set to true if port 465 is selected.
 - `EMAIL_OUTGOING_USER`: Username
 - `EMAIL_OUTGOING_PASS`: Password. If "gmail" selected you will need to provision a dedicated password for the agent [1]
 
 ## IMAP Section
 
 - `EMAIL_INCOMING_SERVICE`: "imap"
-- `EMAIL_INCOMING_HOST`: IMAP Hostname or IP to conenct to
+- `EMAIL_INCOMING_HOST`: IMAP Hostname or IP to connect to
 - `EMAIL_INCOMING_PORT`: the port to connect to (defaults to 993)
 - `EMAIL_INCOMING_USER`: Username
 - `EMAIL_INCOMING_PASS`: Password

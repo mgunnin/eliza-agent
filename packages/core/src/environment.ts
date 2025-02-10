@@ -106,6 +106,14 @@ export const CharacterSchema = z.object({
                 })
                 .optional(),
             model: z.string().optional(),
+            modelConfig: z.object({
+                maxInputTokens: z.number().optional(),
+                maxOutputTokens: z.number().optional(),
+                temperature: z.number().optional(),
+                frequency_penalty: z.number().optional(),
+                presence_penalty:z.number().optional()
+            })
+            .optional(),
             embeddingModel: z.string().optional(),
         })
         .optional(),

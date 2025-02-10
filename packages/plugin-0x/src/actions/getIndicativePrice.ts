@@ -1,9 +1,9 @@
 import {
-    Action,
-    IAgentRuntime,
-    Memory,
-    State,
-    HandlerCallback,
+    type Action,
+    type IAgentRuntime,
+    type Memory,
+    type State,
+    type HandlerCallback,
     elizaLogger,
     composeContext,
     ModelClass,
@@ -13,7 +13,7 @@ import {
 import { createClientV2 } from "@0x/swap-ts-sdk";
 import { getIndicativePriceTemplate } from "../templates";
 import { z } from "zod";
-import { Chains, GetIndicativePriceResponse, PriceInquiry } from "../types";
+import { Chains, type GetIndicativePriceResponse, type PriceInquiry } from "../types";
 import { parseUnits } from "viem";
 import { CHAIN_NAMES, ZX_MEMORY } from "../constants";
 import { EVMTokenRegistry } from "../EVMtokenRegistry";
@@ -45,17 +45,17 @@ export const getIndicativePrice: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: Record<string, unknown>,
+        _options: Record<string, unknown>,
         callback: HandlerCallback
     ) => {
         const supportedChains = Object.keys(Chains).join(" | ");
 
-        state = !state
+        const localState = !state
             ? await runtime.composeState(message, { supportedChains })
             : await runtime.updateRecentMessageState(state);
 
         const context = composeContext({
-            state,
+            state: localState,
             template: getIndicativePriceTemplate,
         });
 
@@ -86,7 +86,7 @@ export const getIndicativePrice: Action = {
                 text: `Unsupported chain: ${chain}. Supported chains are: ${Object.keys(
                     Chains
                 )
-                    .filter((k) => isNaN(Number(k)))
+                    .filter((k) => !Number.isNaN(Number(k)))
                     .join(", ")}`,
             });
             return;
@@ -148,10 +148,10 @@ export const getIndicativePrice: Action = {
             // Format amounts to human-readable numbers
             const buyAmount =
                 Number(price.buyAmount) /
-                Math.pow(10, buyTokenMetadata.decimals);
+                (10 ** buyTokenMetadata.decimals);
             const sellAmount =
                 Number(price.sellAmount) /
-                Math.pow(10, sellTokenMetadata.decimals);
+                (10 ** sellTokenMetadata.decimals);
 
             await storePriceInquiryToMemory(runtime, message, {
                 sellTokenObject: sellTokenMetadata,
@@ -163,13 +163,13 @@ export const getIndicativePrice: Action = {
 
             // Updated formatted response to include chain
             const formattedResponse = [
-                `💱 Swap Details:`,
-                `────────────────`,
+                "💱 Swap Details:",
+                "────────────────",
                 `📤 Sell: ${sellAmount.toFixed(4)} ${sellTokenMetadata.symbol}`,
                 `📥 Buy: ${buyAmount.toFixed(4)} ${buyTokenMetadata.symbol}`,
                 `📊 Rate: 1 ${sellTokenMetadata.symbol} = ${(buyAmount / sellAmount).toFixed(4)} ${buyTokenMetadata.symbol}`,
                 `🔗 Chain: ${CHAIN_NAMES[chainId]}`,
-                `────────────────`,
+                "────────────────",
                 `💫 Happy with the price? Type 'quote' to continue`,
             ].join("\n");
 

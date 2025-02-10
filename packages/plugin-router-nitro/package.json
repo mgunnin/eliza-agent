@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-router-nitro",
-    "version": "0.1.9",
+    "version": "0.25.6-alpha.1",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -31,5 +31,8 @@
         "test": "vitest run",
         "test:watch": "vitest",
         "lint": "eslint --fix  --cache ."
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

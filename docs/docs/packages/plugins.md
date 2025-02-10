@@ -785,7 +785,7 @@ The Form chain plugin enables interaction with Form blockchain's unique SocialFi
    - **Inputs**:
      - `subject`: Address to buy curves for
      - `amount`: Number of curves tokens to buy (defaults to 1)
-     - `formula`: Curves formula type ("QUADRATIC" or "LOGRITHMIC")
+     - `formula`: Curves formula type ("QUADRATIC" or "LOGARITHMIC")
    - **Example**:
      ```json
      {
@@ -799,48 +799,48 @@ The Form chain plugin enables interaction with Form blockchain's unique SocialFi
    - **Inputs**:
      - `subject`: Address whose curves to sell
      - `amount`: Number of curves tokens to sell (defaults to 1)
-     - `formula`: Curves formula type ("QUADRATIC" or "LOGRITHMIC")
+     - `formula`: Curves formula type ("QUADRATIC" or "LOGARITHMIC")
 
 3. `WITHDRAW_CURVES_TOKEN` - Convert curves tokens to their ERC20 equivalent
    - **Inputs**:
      - `subject`: Address whose curves to withdraw
      - `amount`: Number of curves tokens to withdraw (integer values only)
-     - `formula`: Curves formula type ("QUADRATIC" or "LOGRITHMIC")
+     - `formula`: Curves formula type ("QUADRATIC" or "LOGARITHMIC")
 
 4. `DEPOSIT_CURVES_TOKEN` - Convert ERC20 tokens back to curves tokens
    - **Inputs**:
      - `subject`: Address whose ERC20 to convert
      - `amount`: Amount in ERC20 decimals (18 decimals precision)
-     - `formula`: Curves formula type ("QUADRATIC" or "LOGRITHMIC")
+     - `formula`: Curves formula type ("QUADRATIC" or "LOGARITHMIC")
 
 5. `MINT_CURVES_ERC20` - Mint new ERC20 token for curves holdings
    - **Inputs**:
      - `name`: Token name (1-32 characters)
      - `symbol`: Token symbol (1-8 characters, uppercase)
-     - `formula`: Curves formula type ("QUADRATIC" or "LOGRITHMIC")
+     - `formula`: Curves formula type ("QUADRATIC" or "LOGARITHMIC")
 
 6. `GET_CURVES_BALANCE` - Check curves token balance
    - **Inputs**:
      - `subject`: Address to check balance for
      - `owner`: Optional owner address (defaults to connected wallet)
-     - `formula`: Curves formula type ("QUADRATIC" or "LOGRITHMIC")
+     - `formula`: Curves formula type ("QUADRATIC" or "LOGARITHMIC")
 
 7. `GET_CURVES_BUY_PRICE` - Get price quote for buying curves
    - **Inputs**:
      - `subject`: Address to check price for
      - `amount`: Number of curves tokens (defaults to 1)
-     - `formula`: Curves formula type ("QUADRATIC" or "LOGRITHMIC")
+     - `formula`: Curves formula type ("QUADRATIC" or "LOGARITHMIC")
 
 8. `GET_CURVES_SELL_PRICE` - Get price quote for selling curves
    - **Inputs**:
      - `subject`: Address to check price for
      - `amount`: Number of curves tokens (defaults to 1)
-     - `formula`: Curves formula type ("QUADRATIC" or "LOGRITHMIC")
+     - `formula`: Curves formula type ("QUADRATIC" or "LOGARITHMIC")
 
 8. `GET_CURVES_ERC20_DETAILS` - Get curves token respective ERC20 details
    - **Inputs**:
      - `subject`: Address to check ERC20 token for
-     - `formula`: Curves formula type ("QUADRATIC" or "LOGRITHMIC")
+     - `formula`: Curves formula type ("QUADRATIC" or "LOGARITHMIC")
 
 **Providers:**
 - `curvesFormulaProvider` - Provides context about available curves formulas and their use cases
@@ -866,13 +866,13 @@ The Form chain plugin enables interaction with Form blockchain's unique SocialFi
 **Formula Types:**
 
 - `QUADRATIC`: Standard bonding curve for regular use cases
-- `LOGRITHMIC`: Optimized for high-volume trading and price stability
+- `LOGARITHMIC`: Optimized for high-volume trading and price stability
 
 **Best Practices:**
 
 - Always check token balances before selling or withdrawing
 - Use price quotes before executing trades
-- For large-scale operations, use the LOGRITHMIC formula
+- For large-scale operations, use the LOGARITHMIC formula
 - Keep track of ERC20 token addresses after minting
 - Validate token names and symbols before minting
 - Consider gas costs when executing transactions

@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-email-automation",
-    "version": "0.1.9",
+    "version": "0.25.6-alpha.1",
     "description": "AI-powered email automation plugin for Eliza",
     "type": "module",
     "main": "./dist/index.js",
@@ -24,8 +24,7 @@
     "dependencies": {
         "@elizaos/core": "workspace:*",
         "handlebars": "^4.7.8",
-        "resend": "^2.0.0",
-        "zod": "^3.22.4"
+        "resend": "^2.0.0"
     },
     "devDependencies": {
         "@biomejs/biome": "1.9.4",
@@ -35,7 +34,7 @@
         "rimraf": "^5.0.0",
         "ts-jest": "^29.0.0",
         "typescript": "^5.0.0",
-        "vitest": "^2.1.8"
+        "vitest": "^3.0.0"
     },
     "jest": {
         "preset": "ts-jest",
@@ -58,5 +57,8 @@
             "json",
             "node"
         ]
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

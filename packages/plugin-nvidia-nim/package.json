@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-nvidia-nim",
-    "version": "0.1.9",
+    "version": "0.25.6-alpha.1",
     "description": "NVIDIA NIM API plugin for ElizaOS",
     "type": "module",
     "main": "dist/index.js",
@@ -16,7 +16,6 @@
         "@elizaos/core": "workspace:*",
         "openai": "^4.24.1",
         "ora": "^8.1.1",
-        "zod": "^3.23.8",
         "axios": "^1.7.7",
         "chalk": "^5.4.1",
         "cli-table3": "^0.6.5",
@@ -27,7 +26,7 @@
         "@typescript-eslint/eslint-plugin": "^6.7.4",
         "@typescript-eslint/parser": "^6.7.4",
         "typescript": "^5.3.3",
-        "vitest": "^1.2.0",
+        "vitest": "^3.0.0",
         "eslint": "^8.56.0",
         "prettier": "^3.2.0",
         "rimraf": "^5.0.5",
@@ -47,5 +46,8 @@
         "ai"
     ],
     "author": "Eliza Team",
-    "license": "MIT"
+    "license": "MIT",
+    "publishConfig": {
+        "access": "public"
+    }
 }

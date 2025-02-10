@@ -84,4 +84,4 @@ Example Response:
    - Check network connectivity
    - Ensure the API endpoint is accessible
 
-For detailed information and additional implementation examples, please refer to the [Allora-Eliza integration docs](https://docs.allora.network/marketplace/integrations/eliza-os).
+For detailed information and additional implementation examples, please refer to the [Allora-Eliza integration docs](https://docs.allora.network/marketplace/integrations/eliza-os/implementation).

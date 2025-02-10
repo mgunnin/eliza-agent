@@ -30,7 +30,7 @@ export const startAnyone: Action = {
         await proxyService.initialize();
 
         _callback({
-            text: `Started Anyone`,
+            text: 'Started Anyone',
         });
 
         return true;

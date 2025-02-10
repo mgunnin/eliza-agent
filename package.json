@@ -40,7 +40,7 @@
     "typescript": "5.6.3",
     "viem": "2.21.58",
     "vite": "5.4.12",
-    "vitest": "2.1.5"
+    "vitest": "3.0.5"
   },
   "pnpm": {
     "overrides": {
@@ -55,7 +55,7 @@
       "@polkadot/types-codec": "10.13.1",
       "@polkadot/keyring": "12.6.2",
       "@ai-sdk/provider": "1.0.6",
-      "@ai-sdk/provider-utils": "2.1.2",
+      "@ai-sdk/provider-utils": "2.1.6",
       "cookie": "0.7.0",
       "bs58": "5.0.0",
       "@coral-xyz/anchor": "0.28.0"
@@ -80,7 +80,8 @@
     "ollama-ai-provider": "0.16.1",
     "optional": "0.1.4",
     "pnpm": "9.15.0",
-    "sharp": "0.33.5"
+    "sharp": "0.33.5",
+    "zod": "3.24.1"
   },
   "packageManager": "pnpm@9.15.0",
   "workspaces": [

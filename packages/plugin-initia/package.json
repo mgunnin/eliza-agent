@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-initia",
-    "version": "0.1.9",
+    "version": "0.25.6-alpha.1",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -34,5 +34,8 @@
     },
     "devDependencies": {
         "@types/node": "^22.10.1"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

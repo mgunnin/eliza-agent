@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-cronos",
-    "version": "0.1.9",
+    "version": "0.25.6-alpha.1",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -23,7 +23,8 @@
     },
     "devDependencies": {
         "@biomejs/biome": "1.9.4",
-        "tsup": "8.3.5"
+        "tsup": "8.3.5",
+        "vitest": "3.0.5"
     },
     "scripts": {
         "build": "tsup --format esm --no-dts",
@@ -32,9 +33,13 @@
         "lint": "biome lint .",
         "lint:fix": "biome check --apply .",
         "format": "biome format .",
-        "format:fix": "biome format --write ."
+        "format:fix": "biome format --write .",
+        "test": "vitest run"
     },
     "peerDependencies": {
         "whatwg-url": "7.1.0"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

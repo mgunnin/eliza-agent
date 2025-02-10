@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/adapter-qdrant",
-    "version": "0.1.9",
+    "version": "0.25.6-alpha.1",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -26,5 +26,8 @@
         "build": "tsup --format esm --dts",
         "dev": "tsup --format esm --dts --watch",
         "lint": "eslint --fix  --cache ."
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-mina",
-    "version": "0.1.9",
+    "version": "0.25.6-alpha.1",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -24,7 +24,7 @@
         "o1js": "^2.2.0",
         "bignumber.js": "9.1.2",
         "tsup": "8.3.5",
-        "vitest": "3.0.2"
+        "vitest": "3.0.5"
     },
     "scripts": {
         "build": "tsup --format esm --dts",
@@ -33,5 +33,8 @@
     "peerDependencies": {
         "form-data": "4.0.1",
         "whatwg-url": "7.1.0"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

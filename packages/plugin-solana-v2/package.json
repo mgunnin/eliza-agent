@@ -1,8 +1,8 @@
 {
     "name": "@elizaos/plugin-solana-v2",
-    "version": "0.1.9",
-    "main": "dist/index.js",
+    "version": "0.25.6-alpha.1",
     "type": "module",
+    "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "dependencies": {
         "@elizaos/core": "workspace:*",
@@ -18,13 +18,21 @@
         "@types/bs58": "^4.0.4",
         "bs58": "^6.0.0"
     },
+    "devDependencies": {
+        "@biomejs/biome": "1.5.3",
+        "@types/node": "^22.8.7",
+        "tsup": "^8.3.5",
+        "vitest": "2.1.9"
+    },
     "scripts": {
         "build": "tsup --format esm --dts",
-        "dev": "tsup --format esm --dts --watch"
+        "dev": "tsup --format esm --dts --watch",
+        "lint": "biome check src/",
+        "lint:fix": "biome check --apply src/",
+        "format": "biome format src/",
+        "format:fix": "biome format --write src/"
     },
-    "devDependencies": {
-        "@types/node": "^22.8.7",
-        "tsup": "8.3.5",
-        "vitest": "2.1.4"
+    "publishConfig": {
+        "access": "public"
     }
 }

@@ -1,13 +1,13 @@
 import {
-    Action,
-    IAgentRuntime,
-    Memory,
-    State,
-    HandlerCallback,
+    type Action,
+    type IAgentRuntime,
+    type Memory,
+    type State,
+    type HandlerCallback,
     elizaLogger,
     MemoryManager,
 } from "@elizaos/core";
-import { GetQuoteResponse, PriceInquiry, Quote } from "../types";
+import type { GetQuoteResponse, PriceInquiry, Quote } from "../types";
 import { formatTokenAmount } from "../utils";
 import { CHAIN_NAMES, NATIVE_TOKENS, ZX_MEMORY } from "../constants";
 import { createClientV2 } from "@0x/swap-ts-sdk";
@@ -25,8 +25,8 @@ export const getQuote: Action = {
     handler: async (
         runtime: IAgentRuntime,
         message: Memory,
-        state: State,
-        options: Record<string, unknown>,
+        _state: State,
+        _options: Record<string, unknown>,
         callback: HandlerCallback
     ) => {
         const latestPriceInquiry = await retrieveLatestPriceInquiry(
@@ -89,7 +89,7 @@ export const getQuote: Action = {
             const warnings = [];
             if (quote.issues?.balance) {
                 warnings.push(
-                    `⚠️ Warnings:`,
+                    "⚠️ Warnings:",
                     `  • Insufficient balance (Have ${formatTokenAmount(
                         quote.issues.balance.actual,
                         quote.issues.balance.token,
@@ -99,8 +99,8 @@ export const getQuote: Action = {
             }
 
             const formattedResponse = [
-                `🎯 Firm Quote Details:`,
-                `────────────────`,
+                "🎯 Firm Quote Details:",
+                "────────────────",
                 // Basic swap details (same as price)
                 `📤 Sell: ${formatTokenAmount(
                     quote.sellAmount,
@@ -125,7 +125,7 @@ export const getQuote: Action = {
                 )}`,
 
                 // Fee breakdown
-                `💰 Fees Breakdown:`,
+                "💰 Fees Breakdown:",
                 `  • 0x Protocol Fee: ${formatTokenAmount(
                     quote.fees.zeroExFee?.amount,
                     quote.fees.zeroExFee?.token,
@@ -153,8 +153,8 @@ export const getQuote: Action = {
 
                 ...(warnings.length > 0 ? warnings : []),
 
-                `────────────────`,
-                `💫 Ready to execute? Type 'execute' to continue`,
+                "────────────────",
+                "💫 Ready to execute? Type 'execute' to continue",
             ]
                 .filter(Boolean)
                 .join("\n");
@@ -223,20 +223,20 @@ export const getQuote: Action = {
     ],
 };
 
-const formatTime = (time: string) => {
-    const expirationDate = new Date(parseInt(time) * 1000);
+// const formatTime = (time: string) => {
+//     const expirationDate = new Date(parseInt(time) * 1000);
 
-    // Format: "Mar 15, 2:30 PM"
-    const formattedTime = expirationDate.toLocaleString(undefined, {
-        month: "short",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
-    });
+//     // Format: "Mar 15, 2:30 PM"
+//     const formattedTime = expirationDate.toLocaleString(undefined, {
+//         month: "short",
+//         day: "numeric",
+//         hour: "numeric",
+//         minute: "2-digit",
+//         hour12: true,
+//     });
 
-    return `${formattedTime}`;
-};
+//     return `${formattedTime}`;
+// };
 
 export const retrieveLatestPriceInquiry = async (
     runtime: IAgentRuntime,
@@ -260,7 +260,7 @@ export const retrieveLatestPriceInquiry = async (
         }
         return null;
     } catch (error) {
-        elizaLogger.error(`Failed to retrieve price inquiry: ${error.message}`);
+        elizaLogger.error("Failed to retrieve price inquiry:", error.message);
         return null;
     }
 };

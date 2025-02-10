@@ -11,9 +11,9 @@ import {
     elizaLogger,
 } from "@elizaos/core";
 import { Indexer, ZgFile, getFlowContract } from "@0glabs/0g-ts-sdk";
-import { ethers } from "ethers";
+import { ethers, Wallet } from "ethers";
 import { composeContext } from "@elizaos/core";
-import { promises as fs } from "fs";
+import { promises as fs, type Stats } from "node:fs";
 import { FileSecurityValidator } from "../utils/security";
 import { logSecurityEvent, monitorUpload, monitorFileValidation, monitorCleanup } from '../utils/monitoring';
 import { uploadTemplate } from "../templates/upload";
@@ -24,10 +24,10 @@ export interface UploadContent extends Content {
 
 function isUploadContent(
     _runtime: IAgentRuntime,
-    content: any
+    content: unknown
 ): content is UploadContent {
     elizaLogger.debug("Validating upload content", { content });
-    return typeof content.filePath === "string";
+    return typeof content === "object" && content !== null && "filePath" in content && typeof (content as UploadContent).filePath === "string";
 }
 
 export const zgUpload: Action = {
@@ -82,7 +82,7 @@ export const zgUpload: Action = {
             };
 
             // Validate config values
-            if (isNaN(config.maxFileSize) || config.maxFileSize <= 0) {
+            if (Number.isNaN(config.maxFileSize) || config.maxFileSize <= 0) {
                 elizaLogger.error("Invalid ZEROG_MAX_FILE_SIZE setting", {
                     value: runtime.getSetting("ZEROG_MAX_FILE_SIZE"),
                     messageId: message.id
@@ -117,7 +117,7 @@ export const zgUpload: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        _options: any,
+        _options: Record<string, unknown>,
         callback: HandlerCallback
     ) => {
         elizaLogger.info("ZG_UPLOAD action started", {
@@ -131,18 +131,20 @@ export const zgUpload: Action = {
 
         try {
             // Update state if needed
-            if (!state) {
+            // Initialize or update state
+            let currentState = state;
+            if (!currentState) {
                 elizaLogger.debug("No state provided, composing new state");
-                state = (await runtime.composeState(message)) as State;
+                currentState = (await runtime.composeState(message)) as State;
             } else {
                 elizaLogger.debug("Updating existing state");
-                state = await runtime.updateRecentMessageState(state);
+                currentState = await runtime.updateRecentMessageState(currentState);
             }
 
             // Compose upload context
             elizaLogger.debug("Composing upload context");
             const uploadContext = composeContext({
-                state,
+                state: currentState,
                 template: uploadTemplate,
             });
 
@@ -307,7 +309,7 @@ export const zgUpload: Action = {
 
             // Start upload monitoring
             const startTime = Date.now();
-            let fileStats;
+            let fileStats: Stats;
             try {
                 fileStats = await fs.stat(sanitizedPath);
                 elizaLogger.debug("File stats retrieved", {
@@ -365,7 +367,7 @@ export const zgUpload: Action = {
                 const provider = new ethers.JsonRpcProvider(runtime.getSetting("ZEROG_EVM_RPC"));
                 const signer = new ethers.Wallet(runtime.getSetting("ZEROG_PRIVATE_KEY"), provider);
                 const indexer = new Indexer(runtime.getSetting("ZEROG_INDEXER_RPC"));
-                const flowContract = getFlowContract(runtime.getSetting("ZEROG_FLOW_ADDRESS"), signer);
+                const flowContract = getFlowContract(runtime.getSetting("ZEROG_FLOW_ADDRESS"), signer as any);
 
                 // Upload file to ZeroG
                 elizaLogger.info("Starting file upload to ZeroG", {

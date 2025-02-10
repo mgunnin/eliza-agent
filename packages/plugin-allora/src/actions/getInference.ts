@@ -36,22 +36,23 @@ export const getInferenceAction: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: { [key: string]: unknown },
+        _options: { [key: string]: unknown },
         callback: HandlerCallback
     ): Promise<boolean> => {
         // Initialize or update state
-        if (!state) {
-            state = (await runtime.composeState(message)) as State;
+        let currentState = state;
+        if (!currentState) {
+            currentState = (await runtime.composeState(message)) as State;
         } else {
-            state = await runtime.updateRecentMessageState(state);
+            currentState = await runtime.updateRecentMessageState(currentState);
         }
 
         // Get Allora topics information from the provider
-        state.alloraTopics = await topicsProvider.get(runtime, message, state);
+        currentState.alloraTopics = await topicsProvider.get(runtime, message, currentState);
 
         // Compose context for extracting the inference fields
         const inferenceTopicContext = composeContext({
-            state,
+            state: currentState,
             template: getInferenceTemplate,
         });
 

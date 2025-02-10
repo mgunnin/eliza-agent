@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-openai",
-    "version": "0.1.9",
+    "version": "0.25.6-alpha.1",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -24,10 +24,13 @@
     },
     "devDependencies": {
         "tsup": "8.3.5",
-        "vitest": "^1.0.0"
+        "vitest": "^3.0.0"
     },
     "scripts": {
         "build": "tsup src/index.ts --format esm --dts --tsconfig ./tsconfig.json",
         "dev": "tsup src/index.ts --format esm --dts --watch --tsconfig ./tsconfig.json"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

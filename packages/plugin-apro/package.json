@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-apro",
-    "version": "0.1.9",
+    "version": "0.25.6-alpha.1",
     "type": "module",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -37,6 +37,9 @@
     "devDependencies": {
         "@biomejs/biome": "1.9.4",
         "tsup": "8.3.5",
-        "vitest": "2.1.4"
+        "vitest": "2.1.9"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-injective",
-    "version": "0.1.9",
+    "version": "0.25.6-alpha.1",
     "description": "",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -46,5 +46,8 @@
         "@elizaos/adapter-sqlite": "0.1.7-alpha.2",
         "@elizaos/core": "workspace:*",
         "injective-sdk-client-ts": "file:../../packages/plugin-injective/injective-sdk-client-ts"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

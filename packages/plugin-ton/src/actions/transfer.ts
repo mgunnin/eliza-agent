@@ -10,13 +10,13 @@ import {
     type State,
 } from "@elizaos/core";
 import { z } from "zod";
-import { sleep, base64ToHex } from "../util.ts";
 import {
     initWalletProvider,
     type WalletProvider,
     nativeWalletProvider,
 } from "../providers/wallet";
 import { internal } from "@ton/ton";
+import { base64ToHex, sleep } from "../utils/util";
 
 export interface TransferContent extends Content {
     recipient: string;

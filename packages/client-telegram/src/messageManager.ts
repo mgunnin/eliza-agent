@@ -1383,8 +1383,27 @@ export class MessageManager {
 
                 if (!responseContent || !responseContent.text) return;
 
-                // Execute callback to send messages and log memories
-                const responseMessages = await callback(responseContent);
+                const action = this.runtime.actions.find((a) => a.name === responseContent.action);
+                const shouldSuppressInitialMessage = action?.suppressInitialMessage;
+
+                let responseMessages = [];
+
+                if (!shouldSuppressInitialMessage) {
+                    // Execute callback to send messages and log memories
+                    responseMessages = await callback(responseContent);
+                } else {
+                    responseMessages = [
+                        {
+                            id: stringToUuid(messageId + "-" + this.runtime.agentId),
+                            userId: this.runtime.agentId,
+                            agentId: this.runtime.agentId,
+                            content: responseContent,
+                            roomId,
+                            embedding: getEmbeddingZeroVector(),
+                            createdAt: Date.now(),
+                        }
+                    ]
+                }
 
                 // Update state after response
                 state = await this.runtime.updateRecentMessageState(state);

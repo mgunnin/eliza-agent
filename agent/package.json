@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/agent",
-    "version": "0.1.9",
+    "version": "0.25.6-alpha.1",
     "main": "src/index.ts",
     "type": "module",
     "scripts": {
@@ -55,8 +55,10 @@
         "@elizaos/plugin-coinmarketcap": "workspace:*",
         "@elizaos/plugin-conflux": "workspace:*",
         "@elizaos/plugin-cosmos": "workspace:*",
+        "@elizaos/plugin-desk-exchange": "workspace:*",
         "@elizaos/plugin-echochambers": "workspace:*",
         "@elizaos/plugin-evm": "workspace:*",
+        "@elizaos/plugin-edwin": "workspace:*",
         "@elizaos/plugin-flow": "workspace:*",
         "@elizaos/plugin-gelato": "workspace:*",
         "@elizaos/plugin-giphy": "workspace:*",
@@ -66,9 +68,7 @@
         "@elizaos/plugin-icp": "workspace:*",
         "@elizaos/plugin-initia": "workspace:*",
         "@elizaos/plugin-image-generation": "workspace:*",
-        "@elizaos/plugin-intiface": "workspace:*",
         "@elizaos/plugin-lens-network": "workspace:*",
-        "@elizaos/plugin-letzai": "workspace:*",
         "@elizaos/plugin-lit": "workspace:*",
         "@elizaos/plugin-massa": "workspace:*",
         "@elizaos/plugin-mind-network": "workspace:*",

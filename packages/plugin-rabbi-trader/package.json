@@ -1,6 +1,6 @@
 {
     "name": "@elizaos/plugin-rabbi-trader",
-    "version": "0.1.9",
+    "version": "0.25.6-alpha.1",
     "main": "dist/index.js",
     "type": "module",
     "types": "dist/index.d.ts",
@@ -10,7 +10,6 @@
         "@elizaos/plugin-solana": "workspace:*",
         "@elizaos/plugin-trustdb": "workspace:*",
         "@solana/web3.js": "1.95.8",
-        "zod": "3.23.8",
         "@goat-sdk/core": "0.3.8",
         "@goat-sdk/plugin-coingecko": "0.1.4",
         "@goat-sdk/plugin-erc20": "0.1.7",
@@ -22,7 +21,7 @@
         "ws": "^8.0.0"
     },
     "devDependencies": {
-        "vitest": "^1.2.1",
+        "vitest": "^3.0.0",
         "@vitest/coverage-v8": "^1.2.1"
     },
     "scripts": {
@@ -35,5 +34,8 @@
     },
     "peerDependencies": {
         "whatwg-url": "7.1.0"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

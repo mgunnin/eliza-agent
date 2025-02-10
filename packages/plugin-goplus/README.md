@@ -68,7 +68,7 @@ The plugin supports various networks including:
 - `APPROVAL_SECURITY_CHECK`: Smart contract approval analysis
 
 ### Account & Address Security
-- `ADRESS_SECURITY_CHECK`: Malicious address detection
+- `ADDRESS_SECURITY_CHECK`: Malicious address detection
 - `ACCOUNT_ERC20_SECURITY_CHECK`: ERC20 token security
 - `ACCOUNT_ERC721_SECURITY_CHECK`: NFT asset security
 - `ACCOUNT_ERC1155_SECURITY_CHECK`: Multi-token asset security

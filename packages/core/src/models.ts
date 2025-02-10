@@ -987,7 +987,7 @@ export const models: Models = {
         },
     },
     [ModelProviderName.LIVEPEER]: {
-        endpoint: settings.LIVEPEER_GATEWAY_URL,
+        endpoint: settings.LIVEPEER_GATEWAY_URL || "http://gateway.test-gateway",
         model: {
             [ModelClass.SMALL]: {
                 name:

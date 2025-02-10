@@ -17,6 +17,9 @@ import {
 } from "./templates";
 import type { WebClient } from "@slack/web-api";
 import type { IAgentRuntime } from "@elizaos/core";
+import path from "path";
+import fs from "fs";
+import os from "os";
 
 export class MessageManager {
     private client: WebClient;
@@ -174,6 +177,91 @@ export class MessageManager {
         return response;
     }
 
+    private async _downloadAttachments(event: any):Promise<any> {
+        if (event.files==null || event.files.length==0) {
+            return event;
+        }
+
+        elizaLogger.log("📥 Downloading attachments");
+
+        const downloadedAttachments = [];
+        for (const file of event.files) {
+            if (!file.url_private) {
+                elizaLogger.warn(`No url_private found for file ${file.id}`);
+                continue;
+            }
+            try {
+                const response = await fetch(file.url_private, {
+                    headers: {
+                        Authorization: `Bearer ${this.client.token}`
+                    }
+                });
+                if (!response.ok) {
+                    elizaLogger.error(`Failed to download file ${file.id}: ${response.statusText}`);
+                    continue;
+                }
+                const arrayBuffer = await response.arrayBuffer();
+                const buffer = Buffer.from(arrayBuffer);
+
+                // Create a file path in the temporary directory
+                const tempDir = os.tmpdir();
+                const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "_");
+                const filePath = path.join(
+                    tempDir,
+                    `slack_attachment_${file.id}_${Date.now()}_${sanitizedFileName}`
+                );
+
+                fs.writeFileSync(filePath, buffer);
+
+                downloadedAttachments.push({
+                    id: file.id,
+                    title: file.name,
+                    url: filePath,
+                    source: "slack",
+                    description: "Attachment to the Slack message",
+                    text: ""
+                });
+            } catch (error) {
+                elizaLogger.error(`Error downloading file ${file.id}:`, error);
+            }
+        }
+        // Optionally, attach the downloaded attachments to the event for further processing
+        event.downloadedAttachments = downloadedAttachments;
+        elizaLogger.log("✅ Attachments downloaded:", downloadedAttachments);
+        return event;
+    }
+
+    private async _uploadAttachments(event: any, attachments: string[]) {
+        if (attachments==null || attachments.length==0) {
+            return;
+        }
+
+        for (const attachmentId of attachments) {
+            try {
+                // Retrieve file data from the runtime's cache manager.
+                const fileData = await this.runtime.cacheManager.get(attachmentId);
+                if (!fileData) {
+                    elizaLogger.warn(`No file data found for attachment id: ${attachmentId}`);
+                    continue;
+                }
+
+                elizaLogger.log("Uploading text file...");
+                const uploadResult = await this.client.filesUploadV2({
+                    channels: event.channel,
+                    thread_ts: event.thread_ts,
+                    content: fileData as string,
+                    filename: "text.txt",
+                    filetype: "text/plain",
+                    initial_comment: "",
+                    snippet_type: "markdown"
+                });
+                elizaLogger.log("File uploaded successfully:", uploadResult);
+            } catch (error) {
+                elizaLogger.error(`Error uploading file for attachment ${attachmentId}:`, error);
+            }
+        }
+    }
+
     public async handleMessage(event: any) {
         console.log("\n=== MESSAGE_HANDLING PHASE ===");
         console.log("🔍 Step 1: Received new message event");
@@ -256,6 +344,10 @@ export class MessageManager {
 
                 // Create initial memory
                 console.log("💾 Step 5: Creating initial memory");
+
+                // Download attachments if any
+                event = await this._downloadAttachments(event);
+
                 const content: Content = {
                     text: cleanedText,
                     source: "slack",
@@ -264,19 +356,7 @@ export class MessageManager {
                               `${event.thread_ts}-${this.runtime.agentId}`
                           )
                         : undefined,
-                    attachments: event.text
-                        ? [
-                              {
-                                  id: stringToUuid(`${event.ts}-attachment`),
-                                  url: "", // Since this is text content, no URL is needed
-                                  title: "Text Attachment",
-                                  source: "slack",
-                                  description:
-                                      "Text content from Slack message",
-                                  text: cleanedText,
-                              },
-                          ]
-                        : undefined,
+                    attachments: event.downloadedAttachments
                 };
 
                 const memory: Memory = {
@@ -337,22 +417,28 @@ export class MessageManager {
                         console.log("📤 Step 11: Preparing to send response");
 
                         const callback: HandlerCallback = async (
-                            content: Content
+                            content: Content,
+                            attachments: any[]
                         ) => {
                             try {
-                                console.log(
+                                elizaLogger.log(
                                     " Step 12: Executing response callback"
                                 );
-                                const result =
-                                    await this.client.chat.postMessage({
-                                        channel: event.channel,
-                                        text:
-                                            content.text ||
-                                            responseContent.text,
-                                        thread_ts: event.thread_ts,
-                                    });
 
-                                console.log(
+                                const messageText = content.text || responseContent.text;
+
+                                // First, send the main message text
+                                const result = await this.client.chat.postMessage({
+                                    channel: event.channel,
+                                    text: messageText,
+                                    thread_ts: event.thread_ts,
+                                });
+
+                                // Then, for each attachment identifier, fetch the file data from the runtime's cache manager
+                                // and upload it using Slack's files.upload method.
+                                await this._uploadAttachments(event, attachments);
+
+                                elizaLogger.log(
                                     "💾 Step 13: Creating response memory"
                                 );
                                 const responseMemory: Memory = {
@@ -373,7 +459,7 @@ export class MessageManager {
                                     embedding: getEmbeddingZeroVector(),
                                 };
 
-                                console.log(
+                                elizaLogger.log(
                                     "✓ Step 14: Marking message as processed"
                                 );
                                 this.processedMessages.set(
@@ -381,7 +467,7 @@ export class MessageManager {
                                     currentTime
                                 );
 
-                                console.log(
+                                elizaLogger.log(
                                     "💾 Step 15: Saving response memory"
                                 );
                                 await this.runtime.messageManager.createMemory(
@@ -390,7 +476,7 @@ export class MessageManager {
 
                                 return [responseMemory];
                             } catch (error) {
-                                console.error("❌ Error in callback:", error);
+                                elizaLogger.error("❌ Error in callback:", error);
                                 return [];
                             }
                         };
@@ -421,9 +507,16 @@ export class MessageManager {
                 }
             } finally {
                 console.log(
-                    "🔓 Final Step: Removing message from processing lock"
+                    "🔓 Final Step: Removing message from processing lock and deleting downloaded attachments"
                 );
                 this.messageProcessingLock.delete(messageKey);
+
+                // Delete downloaded attachments
+                if (event.downloadedAttachments) {
+                    for (const attachment of event.downloadedAttachments) {
+                        fs.unlinkSync(attachment.url);
+                    }
+                }
             }
         } catch (error) {
             console.error("❌ Error in message handling:", error);
